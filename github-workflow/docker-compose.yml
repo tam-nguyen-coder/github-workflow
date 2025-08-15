@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  # Development environment
+  app-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: github-workflow-dev
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - APP_NAME=GitHub Workflow Demo - DEV
+      - APP_VERSION=1.0.0-dev
+      - API_URL=http://localhost:3000
+      - DEBUG=true
+      - DEPLOYMENT_ID=docker-dev
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run start:dev
+    profiles:
+      - dev
+
+  # Production environment
+  app-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: github-workflow-prod
+    ports:
+      - '3001:3000'
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - APP_NAME=GitHub Workflow Demo - PROD
+      - APP_VERSION=1.0.0
+      - API_URL=http://localhost:3001
+      - DEBUG=false
+      - DEPLOYMENT_ID=docker-prod
+    restart: unless-stopped
+    profiles:
+      - prod
+
+  # Optional: MongoDB for testing
+  mongodb:
+    image: mongo:6-jammy
+    container_name: github-workflow-mongo
+    ports:
+      - '27017:27017'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_INITDB_DATABASE=github-workflow
+    volumes:
+      - mongodb_data:/data/db
+    profiles:
+      - dev
+      - prod
+
+volumes:
+  mongodb_data:

@@ -1,98 +1,208 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# GitHub Workflow Demo
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A simple NestJS API service demonstrating GitHub workflow best practices with development and production environments.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🚀 Features
 
-## Description
+- **Environment-aware API** - Reads configuration from environment variables
+- **Health check endpoints** - Monitor application status
+- **Docker support** - Containerized deployment
+- **GitHub Actions CI/CD** - Automated testing and deployment
+- **Multi-environment setup** - Development and production workflows
+- **Comprehensive testing** - Unit and E2E tests
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 📋 API Endpoints
 
-## Project setup
+| Endpoint  | Method | Description                               |
+| --------- | ------ | ----------------------------------------- |
+| `/`       | GET    | Hello World message                       |
+| `/env`    | GET    | Environment information and configuration |
+| `/health` | GET    | Health check with system information      |
+
+## 🛠️ Quick Start
+
+### Prerequisites
+
+- Node.js 18+
+- npm or yarn
+- Docker (optional)
+
+### Local Development
+
+1. **Clone and install dependencies**:
+
+   ```bash
+   git clone <your-repo-url>
+   cd github-workflow
+   npm install
+   ```
+
+2. **Set up environment**:
+
+   ```bash
+   cp .env.example .env
+   # Edit .env with your configuration
+   ```
+
+3. **Run the application**:
+
+   ```bash
+   # Development mode with hot reload
+   npm run start:dev
+
+   # Production mode
+   npm run start:prod
+   ```
+
+4. **Test the API**:
+   ```bash
+   curl http://localhost:3000/
+   curl http://localhost:3000/env
+   curl http://localhost:3000/health
+   ```
+
+### Docker Development
 
 ```bash
-$ npm install
+# Run development environment
+npm run docker:dev
+
+# Run production environment
+npm run docker:prod
+
+# Stop and cleanup
+npm run docker:down
 ```
 
-## Compile and run the project
+## 🧪 Testing
 
 ```bash
-# development
-$ npm run start
+# Unit tests
+npm test
 
-# watch mode
-$ npm run start:dev
+# E2E tests
+npm run test:e2e
 
-# production mode
-$ npm run start:prod
+# Test coverage
+npm run test:cov
+
+# Watch mode
+npm run test:watch
 ```
 
-## Run tests
+## 🌍 Environment Configuration
+
+The application supports multiple environments through environment variables:
+
+| Variable        | Description                | Default                 |
+| --------------- | -------------------------- | ----------------------- |
+| `NODE_ENV`      | Environment type           | `development`           |
+| `PORT`          | Server port                | `3000`                  |
+| `APP_NAME`      | Application name           | `GitHub Workflow Demo`  |
+| `APP_VERSION`   | Application version        | `1.0.0`                 |
+| `API_URL`       | Base API URL               | `http://localhost:3000` |
+| `DEBUG`         | Debug mode                 | `true`                  |
+| `DATABASE_URL`  | Database connection string | Not set                 |
+| `DEPLOYMENT_ID` | Deployment identifier      | `local`                 |
+
+## 🔄 GitHub Workflow
+
+This project demonstrates a complete GitHub workflow setup:
+
+### Branch Strategy
+
+- `main` - Production branch (protected)
+- `develop` - Development branch (protected)
+- `feature/*` - Feature branches
+
+### Automated Workflows
+
+- **CI Pipeline** - Runs tests and linting on every PR
+- **Development Deployment** - Auto-deploy to dev environment on merge to `develop`
+- **Production Deployment** - Deploy to production on merge to `main` (with approval)
+- **Dependency Review** - Security scanning on PRs
+
+### Environment Protection
+
+- **Development**: No restrictions for rapid iteration
+- **Production**: Requires approval and passing tests
+
+## 📚 Documentation
+
+- [**GitHub Setup Guide**](./docs/github-setup-guide.md) - Complete setup instructions for GitHub workflows
+- [**Environment Guide**](./config/environment-guide.md) - Environment configuration reference
+
+## 🏗️ Project Structure
+
+```
+github-workflow/
+├── .github/workflows/     # GitHub Actions workflows
+├── src/                   # Application source code
+├── test/                  # E2E tests
+├── docs/                  # Documentation
+├── config/                # Configuration guides
+├── Dockerfile             # Container configuration
+├── docker-compose.yml     # Multi-environment setup
+└── .env.example          # Environment template
+```
+
+## 🚢 Deployment
+
+The application can be deployed using:
+
+1. **Docker**: Use the provided Dockerfile and docker-compose.yml
+2. **GitHub Actions**: Automated deployment to your infrastructure
+3. **Manual**: Build and run with Node.js
+
+### Docker Deployment
 
 ```bash
-# unit tests
-$ npm run test
+# Build production image
+docker build -t github-workflow .
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+# Run container
+docker run -p 3000:3000 \
+  -e NODE_ENV=production \
+  -e APP_NAME="GitHub Workflow Demo" \
+  github-workflow
 ```
 
-## Deployment
+## 🤝 Contributing
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+## 📄 Scripts Reference
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+| Script                | Description                               |
+| --------------------- | ----------------------------------------- |
+| `npm start`           | Start the application                     |
+| `npm run start:dev`   | Start in development mode with hot reload |
+| `npm run start:prod`  | Start in production mode                  |
+| `npm run build`       | Build the application                     |
+| `npm test`            | Run unit tests                            |
+| `npm run test:e2e`    | Run end-to-end tests                      |
+| `npm run test:cov`    | Run tests with coverage                   |
+| `npm run lint`        | Run ESLint                                |
+| `npm run format`      | Format code with Prettier                 |
+| `npm run docker:dev`  | Run development environment with Docker   |
+| `npm run docker:prod` | Run production environment with Docker    |
+| `npm run docker:down` | Stop and remove Docker containers         |
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## 🐛 Troubleshooting
 
-## Resources
+- **Port already in use**: Change the `PORT` environment variable
+- **Tests failing**: Check that all dependencies are installed with `npm ci`
+- **Docker issues**: Ensure Docker is running and you have sufficient permissions
+- **Environment variables**: Verify all required environment variables are set
 
-Check out a few resources that may come in handy when working with NestJS:
+## 📝 License
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+This project is for educational purposes demonstrating GitHub workflow best practices.
 
-## Support
+---
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Built with ❤️ using [NestJS](https://nestjs.com/)
